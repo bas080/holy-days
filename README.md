@@ -1,5 +1,16 @@
 # holy-calendar
 
+A project for trying out the Nuxt.js project.
+
+The goal is to see how routing works and how server side and client side
+rendering is merged into a "seamless" programming experience.
+
+After trying it for a bit it does seem to have the features I look for in
+a server side rendering and SPA framework. It does however require a good
+understanding of what happens where (server or client). Cool ideas tied up into
+a neat tool that introduces people to new ways of thinking about web
+development.
+
 ## Build Setup
 
 ```bash

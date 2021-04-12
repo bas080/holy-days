@@ -1,4 +1,4 @@
-# holy-calendar
+# holy-days
 
 A project for trying out the Nuxt.js project.
 

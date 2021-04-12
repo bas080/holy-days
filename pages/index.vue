@@ -1,3 +1,9 @@
-<template>
-  <NuxtLink :to="{name: 'days'}">Holidays</NuxtLink>
-</template>
+<script>
+export default {
+  fetch ({ redirect }) {
+    redirect(301, {
+      name: 'days'
+    })
+  }
+}
+</script>

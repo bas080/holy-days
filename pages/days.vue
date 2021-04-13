@@ -1,14 +1,13 @@
 <template>
   <div>
     <form class="text-4xl my-4">
-      <label>Day:</label>
-      <select @change="dayChange" v-model="day" class="
+      <select @input="dayChange" :value="day.date" class="
         bg-transparent
         border-black border-b-2">
         <option :value="undefined">Select a day</option>
         <option v-for="day in days"
                 :selected="daySelected(day)"
-                :value="day">
+                :value="day.date">
                 {{day.date}}
                 <template v-for="i in day.celebrations.length">&#127881;</template>
                 {{day.celebrations[0].title}}</option>
@@ -22,50 +21,40 @@
 
 <script>
 import Vue from 'vue'
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default Vue.extend({
 
-  data: () => ({
-    day: undefined
-  }),
-
-  computed: mapState({
-    days: ({days}) => days,
-  }),
+  computed: mapGetters([
+    'days',
+    'day'
+  ]),
 
   methods: {
     daySelected(day) {
       return day.date === this.$route.params.date
     },
 
-    dayChange() {
-      if (isNil(this.day)) {
+    dayChange({target: {value: date}}) {
+      if (isEmpty(date)) {
         return this.$router.push({ name: 'days', })
       }
 
       this.$router.push({
         name: 'days-date',
-        params: {date: this.day.date}
+        params: {date: date}
       })
     },
   },
 
-  ...beforeRoute((to, from, next) =>  {
-    next(vm => {
-      vm.day = vm.days.find(day => day.date === to.params.date)
-    })
-  }),
+  asyncData({store, route}) {
+    return store.dispatch('getDay', route.params.date)
+  },
+
 })
 
-function beforeRoute(cb) {
-  return {
-    beforeRouteEnter: cb,
-    beforeRouteUpdate(to, from, next) {
-      const n = next.bind(null, this)
-      cb(to, from, n)
-    },
-  }
+function isEmpty(a) {
+  return isNil(a) || a.length === 0
 }
 
 function isNil(a) {

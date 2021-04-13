@@ -9,30 +9,40 @@ const api = {
 }
 
 export const state = () => ({
-  days: []
+  day: null,
+  days: [],
 })
 
 export const mutations = {
   setDays(state, days) {
     Object.assign(state, {days})
-  }
+  },
+  setDay(state, day) {
+    state.day = day
+  },
 }
 
 export const getters = {
-  getDays: state => state.days,
-  getDay: state => date => {
-    if (typeof date === 'string')
-      date = new Date(date)
-
-    const str = dateToString(date)
-
-    return state.days.find(({date}) => date === str)
-  }
+  days: state => state.days,
+  day: state => state.day,
 }
 
 export const actions = {
   nuxtServerInit({dispatch}) {
     return dispatch('getDays')
+  },
+
+  getDay({commit, getters}, date) {
+    const day = getters.days.find(day => day.date === date)
+
+    if (day)
+      return Promise.resolve(commit('setDay', day))
+
+    if (typeof date === 'string')
+      date = new Date(date)
+
+    return api.get(`/calendars/default/${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`)
+      .then(({data}) => commit('setDay', data))
   },
 
   getDays({commit}, date) {
@@ -44,9 +54,7 @@ export const actions = {
 }
 
 // Helpers
-function zero(n) {
-  return `0${n}`.slice(-2)
-}
+const zero = n => `0${n}`.slice(-2)
 
 const dateToString = date =>
   `${date.getFullYear()}-${zero(date.getMonth() + 1)}-${zero(date.getDate())}`

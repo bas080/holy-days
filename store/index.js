@@ -32,6 +32,7 @@ export const actions = {
     return dispatch('getDays')
   },
 
+  // TODO: check if the parsing to Date instance is necessary.
   getDay({commit, getters}, date) {
     const day = getters.days.find(day => day.date === date)
 

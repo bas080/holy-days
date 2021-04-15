@@ -1,13 +1,16 @@
 <template>
   <div class="m-1">
     <section>
-      <form class="text-2xl my-4">
-        <input type="date" :value="$route.params.date" @change="onDate"></input>
+      <form class="text-2xl my-4" action="/days">
+        <input name="date" type="date" :value="$route.params.date" @change="onDate"/>
+        <noscript>
+          <button class="p-2" value="go to date" type="submit"/>
+        </noscript>
       </form>
     </section>
 
     <section>
-      <NuxtChild></NuxtChild>
+      <NuxtChild/>
     </section>
 
     <section>
@@ -34,8 +37,6 @@
   import Vue from 'vue'
   import { mapGetters } from 'vuex'
   import { toLocaleDateString } from '../utils.js'
-
-  // :selected="daySelected(day)"
 
   export default Vue.extend({
     data: () => ({
@@ -67,6 +68,14 @@
         })
       },
     },
+
+    fetch ({ redirect, route: {query: {date}} }) {
+      if (date)
+        redirect(301, {
+          name: 'days-date',
+          params: {date}
+        })
+    }
   })
 
   function isEmpty(a) {

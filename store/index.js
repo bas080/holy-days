@@ -32,17 +32,15 @@ export const actions = {
     return dispatch('getDays')
   },
 
-  // TODO: check if the parsing to Date instance is necessary.
   getDay({commit, getters}, date) {
     const day = getters.days.find(day => day.date === date)
 
     if (day)
       return Promise.resolve(commit('setDay', day))
 
-    if (typeof date === 'string')
-      date = new Date(date)
+    date = date.replace(/-/g, '/')
 
-    return api.get(`/calendars/default/${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`)
+    return api.get(`/calendars/default/${date}`)
       .then(({data}) => commit('setDay', data))
   },
 
@@ -53,10 +51,3 @@ export const actions = {
       .then(({data}) => commit('setDays', data))
   },
 }
-
-// Helpers
-const zero = n => `0${n}`.slice(-2)
-
-const dateToString = date =>
-  `${date.getFullYear()}-${zero(date.getMonth() + 1)}-${zero(date.getDate())}`
-

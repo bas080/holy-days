@@ -1,6 +1,6 @@
 <template>
-  <div class="grid grid-cols-1">
-    <h1 class="text-7xl my-4">Holy-days</h1>
+  <div>
+    <img src="~/assets/logo.png" />
     <Nuxt />
   </div>
 </template>

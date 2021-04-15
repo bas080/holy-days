@@ -3,7 +3,7 @@
 A project for trying out the Nuxt.js project.
 
 The goal is to see how routing works and how server side and client side
-rendering is merged into a "seamless" programming experience.
+rendering is merged into a "seamless" (programming) experience.
 
 After trying it for a bit it does seem to have the features I look for in
 a server side rendering and SPA framework. It does however require a good
@@ -23,9 +23,11 @@ $ npm run dev
 # build for production and launch server
 $ npm run build
 $ npm run start
-
-# generate static project
-$ npm run generate
 ```
+
+## Tests
+
+Run `npm test` or run any executable in the `./t/` directory.
+
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).

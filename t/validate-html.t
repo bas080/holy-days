@@ -2,7 +2,7 @@
 
 source bash-tap
 
-plan 21
+plan 7
 
 DOMAIN_NAME="${DOMAIN_NAME:-http://localhost:3000}"
 RANDOM_DAYS="$RANDOM"
